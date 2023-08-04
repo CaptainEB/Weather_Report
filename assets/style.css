@@ -3,13 +3,73 @@
 }
 
 body {
-    margin: 5px;
-    padding: 0;
+	margin: 5px;
+	padding: 0;
 }
 
 header {
 	background: linear-gradient(90deg, rgba(70, 90, 184, 1) 0%, rgba(38, 19, 96, 1) 100%);
-    padding: 10px;
-    color: white;
-    text-align: center;
+	padding: 10px;
+	color: white;
+	text-align: center;
+}
+
+main {
+	display: flex;
+}
+
+.aside {
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	margin: 5px;
+}
+
+.aside h2 {
+	font-weight: 900;
+	font-size: 2rem;
+}
+
+.aside > * {
+	margin: 5px 0px;
+}
+
+.input {
+	border-radius: 0.3rem;
+	font-size: 1.5rem;
+	padding: 0.5rem;
+	outline: none;
+	border: rgba(0, 0, 0, 0.5) solid 2px;
+	margin: 10px 0px;
+}
+
+.input:hover,
+.input:focus {
+	outline: auto;
+}
+
+.searchBtn {
+    cursor: pointer;
+	height: 3rem;
+	font-size: 1.5rem;
+	border: none;
+	border-radius: 0.35rem;
+	background-color: rgb(105, 145, 227);
+	color: white;
+	margin: 10px 0px;
+}
+
+.oldLinks {
+	display: flex;
+	flex-direction: column;
+}
+
+.oldLink {
+    cursor: pointer;
+	margin: 10px 0px;
+	height: 3rem;
+	border: none;
+	background-color: rgb(174, 174, 174);
+    border-radius: .3rem;
+    font-size: 1.5rem;
 }
