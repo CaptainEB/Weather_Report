@@ -1,0 +1,15 @@
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 5px;
+    padding: 0;
+}
+
+header {
+	background: linear-gradient(90deg, rgba(70, 90, 184, 1) 0%, rgba(38, 19, 96, 1) 100%);
+    padding: 10px;
+    color: white;
+    text-align: center;
+}
