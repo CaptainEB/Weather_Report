@@ -18,11 +18,19 @@ function Search(searchWord) {
 		})
 		.then((response) => {
 			console.log(response);
+			return response;
 		});
+}
+
+function CreateElement(element) {
+	var button = $("<button>").text(element);
+	button.addClass("oldLink");
+	oldLinks.append(button);
 }
 
 searchEl.on("click", function () {
 	var searchWord = inputEl.val();
 
+	CreateElement(searchWord);
 	Search(searchWord);
 });
