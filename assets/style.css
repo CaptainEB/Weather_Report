@@ -37,7 +37,7 @@ main {
 .input {
 	border-radius: 0.3rem;
 	font-size: 1.5rem;
-	padding: 0.5rem;
+	padding: 0.75rem;
 	outline: none;
 	border: rgba(0, 0, 0, 0.5) solid 2px;
 	margin: 10px 0px;
@@ -49,7 +49,7 @@ main {
 }
 
 .searchBtn {
-    cursor: pointer;
+	cursor: pointer;
 	height: 3rem;
 	font-size: 1.5rem;
 	border: none;
@@ -65,11 +65,11 @@ main {
 }
 
 .oldLink {
-    cursor: pointer;
+	cursor: pointer;
 	margin: 10px 0px;
 	height: 3rem;
 	border: none;
 	background-color: rgb(174, 174, 174);
-    border-radius: .3rem;
-    font-size: 1.5rem;
+	border-radius: 0.3rem;
+	font-size: 1.5rem;
 }
