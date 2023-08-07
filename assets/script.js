@@ -11,6 +11,9 @@ var oldLinks = $("#oldLinks");
 var searchEl = $("#SearchBtn");
 var inputEl = $("#input");
 
+// global variables
+var today = dayjs().format("M/D/YYYY");
+
 async function Search(searchWord) {
 	const response = await fetch(GEO_URL + searchWord + "&appid=" + apiKey);
 	if (response.ok) {
@@ -28,21 +31,30 @@ async function Search(searchWord) {
 			//empty main weeather section]
 			mainEl.empty();
 
-			mainEl.css("border", "2px solid black");
+			// This section only shows the weather data for TODAY
 			var headerEl = $("<h3>");
-			headerEl.text(weatherData.city.name + " " + "(" + thisDay_time + ")");
+			headerEl.text(weatherData.city.name + " " + "(" + today + ")");
 			mainEl.append(headerEl);
 
-			for (var i = 0; i < 40; i += 7) {
+			var infoEl = $("<p>");
+			infoEl.text("Temperature: " + weatherData.list[0].main.temp + "°F");
+
+			mainEl.append(infoEl);
+
+			infoEl = new $("<p>");
+			infoEl.text("Wind: " + weatherData.list[0].wind.speed + "MPH");
+			mainEl.append(infoEl);
+
+			infoEl = new $("<p>");
+			infoEl.text("Humidity: " + weatherData.list[0].main.humidity + "%");
+			mainEl.append(infoEl);
+
+			// This section shows the next 5 days weeather forecast on the screen
+			for (var i = 7; i < 40; i += 7) {
 				var thisDay = weatherData.list[i];
 				var thisDay_time = dayjs.unix(thisDay.dt).format("M/D/YYYY");
 
-				//adds a border to the main section
-
-				// adds the result to the screen
-
-				var infoEl = $("<p>");
-
+				infoEl = new $("<p>");
 				infoEl.text("Temperature: " + thisDay.main.temp + "°F");
 
 				mainEl.append(infoEl);
