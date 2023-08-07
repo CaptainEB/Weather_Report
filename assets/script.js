@@ -1,8 +1,9 @@
-// API Call https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+// API Call https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 // API
 var apiKey = "139a03101b47f7ef6ab0275fb6f50464";
-var URL = " https://api.openweathermap.org/data/2.5/weather?units=imperial&q=";
+var URL = " https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=";
+var GEO_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
 
 // Refrences
 var mainEl = $("#mainSection");
@@ -10,39 +11,90 @@ var oldLinks = $("#oldLinks");
 var searchEl = $("#SearchBtn");
 var inputEl = $("#input");
 
-// Global Variables
-var today = dayjs().format("D/M/YYYY");
+async function Search(searchWord) {
+	const response = await fetch(GEO_URL + searchWord + "&appid=" + apiKey);
+	if (response.ok) {
+		// Get Coordinates of the typed location
+		var cords = await response.json();
+		var lat = cords[0].lat;
+		var lon = cords[0].lon;
 
-function Search(searchWord) {
-	fetch(URL + searchWord + "&appid=" + apiKey)
-		.then((response) => {
-			if (response.ok) return response.json();
-			else console.log("Error: RESPONSE NOT OK");
-		})
-		.then((response) => {
-			// Empty the main weather section
+		const weatherDataResponse = await fetch(URL + lat + "&lon=" + lon + "&appid=" + apiKey);
+
+		if (weatherDataResponse.ok) {
+			const weatherData = await weatherDataResponse.json();
+			console.log(weatherData);
+
+			//empty main weeather section]
 			mainEl.empty();
 
-			// adds a border to the main section
 			mainEl.css("border", "2px solid black");
-			// adds the result to the screen
 			var headerEl = $("<h3>");
-			var infoEl = $("<p>");
-			headerEl.text(response.name + " " + "(" + today + ")");
-			infoEl.text("Temperature: " + response.main.temp + "°F");
+			headerEl.text(weatherData.city.name + " " + "(" + thisDay_time + ")");
 			mainEl.append(headerEl);
-			mainEl.append(infoEl);
 
-			infoEl = new $("<p>");
-			infoEl.text("Wind: " + response.wind.speed + "MPH");
-			mainEl.append(infoEl);
+			for (var i = 0; i < 40; i += 7) {
+				var thisDay = weatherData.list[i];
+				var thisDay_time = dayjs.unix(thisDay.dt).format("M/D/YYYY");
 
-			infoEl = new $("<p>");
-			infoEl.text("Humidity: " + response.main.humidity + "%");
-			mainEl.append(infoEl);
+				//adds a border to the main section
 
-			console.log(response);
-		});
+				// adds the result to the screen
+
+				var infoEl = $("<p>");
+
+				infoEl.text("Temperature: " + thisDay.main.temp + "°F");
+
+				mainEl.append(infoEl);
+
+				infoEl = new $("<p>");
+				infoEl.text("Wind: " + thisDay.wind.speed + "MPH");
+				mainEl.append(infoEl);
+
+				infoEl = new $("<p>");
+				infoEl.text("Humidity: " + thisDay.main.humidity + "%");
+				mainEl.append(infoEl);
+			}
+		} else {
+			console.log("ERROR:WEATHER DATA RESPONSE NOT OK");
+		}
+
+		// fetch(URL + lat + "&lon=" + lon + "&appid=" + apiKey)
+		// 	.then((response) => {
+		// 		if (response.ok) return response.json();
+		// 		else console.log("Error: RESPONSE NOT OK");
+		// 	})
+		// 	.then((response) => {
+		// 		console.log(response);
+		// 		for (var i = 0; i < 5; i++) {
+		// 			var time = dayjs.unix(response.list[i].dt).format("M/D/YYYY");
+		// 			console.log(time);
+		// 		}
+		//
+
+		// 		// // adds a border to the main section
+		// 		// mainEl.css("border", "2px solid black");
+		// 		// // adds the result to the screen
+		// 		// var headerEl = $("<h3>");
+		// 		// var infoEl = $("<p>");
+		// 		// headerEl.text(response.name + " " + "(" + today + ")");
+		// 		// infoEl.text("Temperature: " + response.main.temp + "°F");
+		// 		// mainEl.append(headerEl);
+		// 		// mainEl.append(infoEl);
+
+		// 		// infoEl = new $("<p>");
+		// 		// infoEl.text("Wind: " + response.wind.speed + "MPH");
+		// 		// mainEl.append(infoEl);
+
+		// 		// infoEl = new $("<p>");
+		// 		// infoEl.text("Humidity: " + response.main.humidity + "%");
+		// 		// mainEl.append(infoEl);
+
+		// 		// console.log(response);
+		// 	});
+	} else {
+		console.log("ERROR: RESPONSE NOT OK");
+	}
 }
 
 // Adds old searches to the screen
