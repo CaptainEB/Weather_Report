@@ -73,3 +73,14 @@ main {
 	border-radius: 0.3rem;
 	font-size: 1.5rem;
 }
+
+.mainSection {
+	width: 60%;
+	font-size: 1.5rem;
+	margin: 1rem;
+	padding: 1rem;
+}
+
+.mainSection h3 {
+	font-size: 2.5rem;
+}

@@ -20,11 +20,24 @@ function Search(searchWord) {
 			else console.log("Error: RESPONSE NOT OK");
 		})
 		.then((response) => {
+			// adds a border to the main section
+			mainEl.css("border", "2px solid black");
 			// adds the result to the screen
-			var headerEl = $("<p>");
-			headerEl.text(response.name + " " + today + " " + response.weather[0].icon);
-
+			var headerEl = $("<h3>");
+			var infoEl = $("<p>");
+			headerEl.text(response.name + " " + "(" + today + ")");
+			infoEl.text("Temperature: " + response.main.temp + "°F");
 			mainEl.append(headerEl);
+			mainEl.append(infoEl);
+
+			infoEl = new $("<p>");
+			infoEl.text("Wind: " + response.wind.speed + "MPH");
+			mainEl.append(infoEl);
+
+			infoEl = new $("<p>");
+			infoEl.text("Humidity: " + response.main.humidity + "%");
+			mainEl.append(infoEl);
+
 			console.log(response);
 			return response;
 		});
@@ -34,6 +47,7 @@ function Search(searchWord) {
 function CreateElement(element) {
 	var button = $("<button>").text(element);
 	button.addClass("oldLink");
+	button.attr("id", "oldLink");
 	oldLinks.append(button);
 }
 
@@ -42,4 +56,9 @@ searchEl.on("click", function () {
 
 	CreateElement(searchWord);
 	Search(searchWord);
+});
+
+$(".oldLink").on("click", function () {
+	// Search($(this).val());
+	console.log("hi");
 });
