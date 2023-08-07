@@ -55,8 +55,11 @@ async function Search(searchWord) {
 				var thisDay_time = dayjs.unix(thisDay.dt).format("M/D/YYYY");
 
 				infoEl = new $("<p>");
-				infoEl.text("Temperature: " + thisDay.main.temp + "°F");
+				infoEl.text("(" + thisDay_time + ")");
+				mainEl.append(infoEl);
 
+				infoEl = new $("<p>");
+				infoEl.text("Temperature: " + thisDay.main.temp + "°F");
 				mainEl.append(infoEl);
 
 				infoEl = new $("<p>");
