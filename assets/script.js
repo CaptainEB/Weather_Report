@@ -20,6 +20,9 @@ function Search(searchWord) {
 			else console.log("Error: RESPONSE NOT OK");
 		})
 		.then((response) => {
+			// Empty the main weather section
+			mainEl.empty();
+
 			// adds a border to the main section
 			mainEl.css("border", "2px solid black");
 			// adds the result to the screen
@@ -39,7 +42,6 @@ function Search(searchWord) {
 			mainEl.append(infoEl);
 
 			console.log(response);
-			return response;
 		});
 }
 
@@ -58,7 +60,6 @@ searchEl.on("click", function () {
 	Search(searchWord);
 });
 
-$(".oldLink").on("click", function () {
-	// Search($(this).val());
-	console.log("hi");
+$(".oldLinks").on("click", "#oldLink", function () {
+	Search($(this).text());
 });
