@@ -10,6 +10,8 @@ var mainEl = $("#mainSection");
 var oldLinks = $("#oldLinks");
 var searchEl = $("#SearchBtn");
 var inputEl = $("#input");
+var todayEl = $("#today");
+var forecastEl = $("#forecast");
 
 // global variables
 var today = dayjs().format("M/D/YYYY");
@@ -28,85 +30,62 @@ async function Search(searchWord) {
 			const weatherData = await weatherDataResponse.json();
 			console.log(weatherData);
 
-			//empty main weeather section]
-			mainEl.empty();
+			//empty main weeather section
+			todayEl.empty();
+			forecastEl.empty();
 
 			// This section only shows the weather data for TODAY
 			var headerEl = $("<h3>");
 			headerEl.text(weatherData.city.name + " " + "(" + today + ")");
-			mainEl.append(headerEl);
+			todayEl.append(headerEl);
 
 			var infoEl = $("<p>");
 			infoEl.text("Temperature: " + weatherData.list[0].main.temp + "°F");
 
-			mainEl.append(infoEl);
+			todayEl.append(infoEl);
 
 			infoEl = new $("<p>");
 			infoEl.text("Wind: " + weatherData.list[0].wind.speed + "MPH");
-			mainEl.append(infoEl);
+			todayEl.append(infoEl);
 
 			infoEl = new $("<p>");
 			infoEl.text("Humidity: " + weatherData.list[0].main.humidity + "%");
-			mainEl.append(infoEl);
+			todayEl.append(infoEl);
+
+			infoEl = new $("<p>");
+			infoEl.text("5 Day Forecast: ");
+			infoEl.addClass("forecastText");
+			forecastEl.append(infoEl);
 
 			// This section shows the next 5 days weeather forecast on the screen
 			for (var i = 7; i < 40; i += 7) {
 				var thisDay = weatherData.list[i];
 				var thisDay_time = dayjs.unix(thisDay.dt).format("M/D/YYYY");
 
+				var div = $("<div>");
+				div.addClass("forecastDay");
 				infoEl = new $("<p>");
-				infoEl.text("(" + thisDay_time + ")");
-				mainEl.append(infoEl);
+				infoEl.text(thisDay_time);
+				infoEl.addClass("forecastDayDate");
+				div.append(infoEl);
 
 				infoEl = new $("<p>");
 				infoEl.text("Temperature: " + thisDay.main.temp + "°F");
-				mainEl.append(infoEl);
+				div.append(infoEl);
 
 				infoEl = new $("<p>");
 				infoEl.text("Wind: " + thisDay.wind.speed + "MPH");
-				mainEl.append(infoEl);
+				div.append(infoEl);
 
 				infoEl = new $("<p>");
 				infoEl.text("Humidity: " + thisDay.main.humidity + "%");
-				mainEl.append(infoEl);
+				div.append(infoEl);
+
+				forecastEl.append(div);
 			}
 		} else {
 			console.log("ERROR:WEATHER DATA RESPONSE NOT OK");
 		}
-
-		// fetch(URL + lat + "&lon=" + lon + "&appid=" + apiKey)
-		// 	.then((response) => {
-		// 		if (response.ok) return response.json();
-		// 		else console.log("Error: RESPONSE NOT OK");
-		// 	})
-		// 	.then((response) => {
-		// 		console.log(response);
-		// 		for (var i = 0; i < 5; i++) {
-		// 			var time = dayjs.unix(response.list[i].dt).format("M/D/YYYY");
-		// 			console.log(time);
-		// 		}
-		//
-
-		// 		// // adds a border to the main section
-		// 		// mainEl.css("border", "2px solid black");
-		// 		// // adds the result to the screen
-		// 		// var headerEl = $("<h3>");
-		// 		// var infoEl = $("<p>");
-		// 		// headerEl.text(response.name + " " + "(" + today + ")");
-		// 		// infoEl.text("Temperature: " + response.main.temp + "°F");
-		// 		// mainEl.append(headerEl);
-		// 		// mainEl.append(infoEl);
-
-		// 		// infoEl = new $("<p>");
-		// 		// infoEl.text("Wind: " + response.wind.speed + "MPH");
-		// 		// mainEl.append(infoEl);
-
-		// 		// infoEl = new $("<p>");
-		// 		// infoEl.text("Humidity: " + response.main.humidity + "%");
-		// 		// mainEl.append(infoEl);
-
-		// 		// console.log(response);
-		// 	});
 	} else {
 		console.log("ERROR: RESPONSE NOT OK");
 	}

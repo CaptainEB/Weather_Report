@@ -21,7 +21,7 @@ main {
 .aside {
 	display: flex;
 	flex-direction: column;
-	width: 30%;
+	width: 25%;
 	margin: 5px;
 }
 
@@ -83,4 +83,36 @@ main {
 
 .mainSection h3 {
 	font-size: 2.5rem;
+}
+
+.today {
+	border: 2px solid black;
+	padding: 0.5rem;
+}
+
+.forecast {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.forecastText {
+	width: 100%;
+	font-weight: bold;
+	font-size: 1.75rem;
+}
+
+.forecastDay {
+	background-color: #323d4f;
+	color: white;
+	padding: 1rem;
+	font-size: 1rem;
+	margin: .5rem;
+	line-height: 1.5rem;
+}
+
+.forecastDayDate {
+	margin-top: 0;
+	margin-bottom: 2rem;
+	font-size: 1.5rem;
+	font-weight: bold;
 }
