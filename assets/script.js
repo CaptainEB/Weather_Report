@@ -1,6 +1,7 @@
 // API Call https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 // API
+var imgURL = "https://openweathermap.org/img/wn/";
 var apiKey = "139a03101b47f7ef6ab0275fb6f50464";
 var URL = " https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=";
 var GEO_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
@@ -34,10 +35,15 @@ async function Search(searchWord) {
 			todayEl.empty();
 			forecastEl.empty();
 
+			// Create icon for weather header
+			var iconID = weatherData.list[0].weather[0].icon;
+			var imgEl = $("<img>");
+			imgEl.attr("src", imgURL + iconID + ".png");
+
 			// This section only shows the weather data for TODAY
 			var headerEl = $("<h3>");
 			headerEl.text(weatherData.city.name + " " + "(" + today + ")");
-			todayEl.append(headerEl);
+			todayEl.append(headerEl, " ", imgEl);
 
 			var infoEl = $("<p>");
 			infoEl.text("Temperature: " + weatherData.list[0].main.temp + "°F");
@@ -58,7 +64,7 @@ async function Search(searchWord) {
 			forecastEl.append(infoEl);
 
 			// This section shows the next 5 days weeather forecast on the screen
-			for (var i = 7; i < 40; i += 7) {
+			for (var i = 7; i < 40; i += 8) {
 				var thisDay = weatherData.list[i];
 				var thisDay_time = dayjs.unix(thisDay.dt).format("M/D/YYYY");
 
@@ -68,6 +74,11 @@ async function Search(searchWord) {
 				infoEl.text(thisDay_time);
 				infoEl.addClass("forecastDayDate");
 				div.append(infoEl);
+
+				iconID = weatherData.list[i].weather[0].icon;
+				imgEl = new $("<img>");
+				imgEl.attr("src", imgURL + iconID + ".png");
+				div.append(imgEl);
 
 				infoEl = new $("<p>");
 				infoEl.text("Temperature: " + thisDay.main.temp + "°F");
