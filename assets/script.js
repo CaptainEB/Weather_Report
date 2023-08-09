@@ -16,6 +16,7 @@ var forecastEl = $("#forecast");
 
 // global variables
 var today = dayjs().format("M/D/YYYY");
+var buttons = JSON.parse(localStorage.getItem("buttons")) || [];
 
 async function Search(searchWord) {
 	const response = await fetch(GEO_URL + searchWord + "&appid=" + apiKey);
@@ -103,17 +104,41 @@ async function Search(searchWord) {
 }
 
 // Adds old searches to the screen
-function CreateElement(element) {
-	var button = $("<button>").text(element);
-	button.addClass("oldLink");
-	button.attr("id", "oldLink");
-	oldLinks.append(button);
+function CreateButtons(searchWord) {
+	oldLinks.empty();
+
+	if (!Array.isArray(buttons)) buttons = [];
+	buttons.push(searchWord);
+	localStorage.setItem("buttons", JSON.stringify(buttons));
+
+
+	for (var i = 0; i < buttons.length; i++) {
+		button = new $("<button>");
+		button.text(buttons[i]);
+		button.addClass("oldLink");
+		button.attr("id", "oldLink");
+		oldLinks.append(button);
+	}
 }
+
+function ShowButtons() {
+	oldLinks.empty();
+	if (!Array.isArray(buttons)) return;
+	for (var i = 0; i < buttons.length; i++) {
+		button = new $("<button>");
+		button.text(buttons[i]);
+		button.addClass("oldLink");
+		button.attr("id", "oldLink");
+		oldLinks.append(button);
+	}
+}
+
+ShowButtons();
 
 searchEl.on("click", function () {
 	var searchWord = inputEl.val();
 
-	CreateElement(searchWord);
+	CreateButtons(searchWord);
 	Search(searchWord);
 });
 
