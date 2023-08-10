@@ -4,7 +4,7 @@
 var imgURL = "https://openweathermap.org/img/wn/";
 var apiKey = "139a03101b47f7ef6ab0275fb6f50464";
 var URL = " https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=";
-var GEO_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
+var GEO_URL = "https://api.openweathermap.org/geo/1.0/direct?q=";
 
 // Refrences
 var mainEl = $("#mainSection");
