@@ -1,6 +1,6 @@
 # Weather Report by Sam Ebadi Sobi
 
-## Live URL:
+## Live URL: https://captaineb.github.io/Weather_Report/
 
 ## This app shows the weather report for the searched city in the US and also keeps the searched results below the search box. The previously searched results are stored in the local storage and loaded on page refresh and by a click to the search button.
 
