@@ -26,6 +26,7 @@ async function Search(searchWord) {
 		var lat = cords[0].lat;
 		var lon = cords[0].lon;
 
+		// Get the weather data with the coordinates of the typed city
 		const weatherDataResponse = await fetch(URL + lat + "&lon=" + lon + "&appid=" + apiKey);
 
 		if (weatherDataResponse.ok) {
@@ -103,14 +104,13 @@ async function Search(searchWord) {
 	}
 }
 
-// Adds old searches to the screen
+// Adds old searches to the screen when the search button is clicked
 function CreateButtons(searchWord) {
 	oldLinks.empty();
 
 	if (!Array.isArray(buttons)) buttons = [];
 	buttons.push(searchWord);
 	localStorage.setItem("buttons", JSON.stringify(buttons));
-
 
 	for (var i = 0; i < buttons.length; i++) {
 		button = new $("<button>");
@@ -121,6 +121,7 @@ function CreateButtons(searchWord) {
 	}
 }
 
+// Shows the old searches on page load
 function ShowButtons() {
 	oldLinks.empty();
 	if (!Array.isArray(buttons)) return;
@@ -135,6 +136,7 @@ function ShowButtons() {
 
 ShowButtons();
 
+// Click handler for the search button
 searchEl.on("click", function () {
 	var searchWord = inputEl.val();
 
@@ -142,6 +144,7 @@ searchEl.on("click", function () {
 	Search(searchWord);
 });
 
+// Click handler for the old search links
 $(".oldLinks").on("click", "#oldLink", function () {
 	Search($(this).text());
 });
